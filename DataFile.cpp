@@ -83,6 +83,7 @@ DataFile::~DataFile()
 {
 	delete[] this->Data;
 	delete[] this->FileName;
+	cout << "destrctor" << endl;
 }
 
 DataFile::DataFile(char* fileName, char* data)
@@ -95,7 +96,15 @@ DataFile::DataFile(char* fileName, char* data)
 	this->setFileName(fileName);
 	this->setlastUpdateTime();
 }
-
+DataFile::DataFile(const DataFile& df)
+{
+	this->Data = new char[strlen(df.Data) + 1];
+	this->FileName = new char[strlen(df.FileName) + 1];
+	strcpy(this->Data, df.Data);
+	strcpy(this->FileName, df.FileName);
+	this->lastUpdateTime = df.lastUpdateTime;
+}
+/*
 DataFile::DataFile(DataFile* df)
 {
 	this->Data = new char[strlen(df->Data)+1];
@@ -105,5 +114,20 @@ DataFile::DataFile(DataFile* df)
 	strcpy(this->FileName, df->FileName);
 	this->lastUpdateTime = df->lastUpdateTime;
 }
+*/
+
+const DataFile& DataFile::operator=(const DataFile& other)
+{
+	if (this != &other) {
+		this->Data = new char[strlen(other.Data) + 1];
+		this->Data = new char[strlen(other.FileName) + 1];
+		strcpy(this->Data, other.Data);
+		strcpy(this->FileName, other.FileName);
+		this->lastUpdateTime = other.lastUpdateTime;
+	}
+	return *this;
+}
+
+
 
 

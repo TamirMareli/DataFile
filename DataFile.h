@@ -19,6 +19,7 @@ public:
 	DataFile();
 	~DataFile();
 	DataFile(char* fileName, char* data);
-	DataFile(DataFile* df);
+	DataFile(const DataFile& df);
+	const DataFile& operator=(const DataFile& other);
 };
 

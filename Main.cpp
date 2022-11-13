@@ -1,26 +1,27 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "DataFile.h"
 #include <iostream> 
-#include <string.h>
+#include <string>
 using namespace std;
 const int SIZE = 200;
 bool isEmpty(int count);
 void main() {
 	int Choose,size=0,exit=1;
-	DataFile* file=new DataFile;
-	cout << "1. Print Files" << endl;
-	cout << "2. Add File" << endl;
-	cout << "3. Edit File" << endl;
-	cout << "Exit" << endl;
+	DataFile** file=new DataFile*;
+	*file = new DataFile;
 	do
 	{
+		cout << "1. Print Files" << endl;
+		cout << "2. Add File" << endl;
+		cout << "3. Edit File" << endl;
+		cout << "4. Exit" << endl;
 	cin >> Choose;
 	switch (Choose)
 	{
 	case (1): {
 		if (!isEmpty(size))
 			for (int i = 0; i < size; i++) {
-				(file + i)->dir();
+				file[i]->dir();
 				cout << "------------------------------------" << endl;
 			}
 
@@ -28,26 +29,30 @@ void main() {
 	}
 	case (2): {
 		size++;
-		DataFile* df = new DataFile[size];
+		DataFile** df = new DataFile*[size];
 		for (int i = 0; i < size - 1; i++) {
-			*(df + i) = new DataFile(file);
-			delete  (file + i);
+			df[i] = new DataFile(*file[i]);
+			//delete file[i];
 		}
 		delete[] file;
-		file = new DataFile[size];
+		file = new DataFile*[size];
 		char* filename = new char[SIZE];
 		char* data = new char[SIZE];
+		//need to fix
+		cin.clear();
+		cin.getline(data, SIZE);
 		cout << "Enter the file name of the file" << endl;
 		cin.clear();
 		cin.getline(filename, SIZE);
 		cout << "Enter the data of the file" << endl;
 		cin.clear();
 		cin.getline(data, SIZE);
-		DataFile temp = new DataFile(filename, data);
-		*(file + size - 1) = new DataFile(temp);
+		DataFile* temp = new DataFile(filename, data);
+		file = new DataFile*[size];
+		file [size - 1] = new DataFile(*temp);
 		for (int i = 0; i < size - 1; i++) {
-		*(file + i) = new DataFile(*(df + i));
-		delete (df + i);
+		file[i] = new DataFile(*df[i]);
+		delete df[i];
 	}
 		delete[] df;
 		break;
@@ -56,25 +61,35 @@ void main() {
 		int ck = 0;
 		char* name = new char[SIZE];
 		char* data = new char[SIZE];
+		//need to fix
+		cin.clear();
+		cin.getline(data, SIZE);
 		cout << "Enater name of file" << endl;
 		cin.clear();
 		cin.getline(name, SIZE);
 		for (int i = 0; i < size; i++) {
-			if (strcmp((file+i)->getFileName(),name)) {
-				(file + i)->setFileName(name);
-				(file+i)->setlastUpdateTime();
+			if (strcmp(file[i]->getFileName(), name)) {
+				file[i]->setFileName(name);
+				cout << "Enter the data of the file" << endl;
+				cin.clear();
+				cin.getline(data, SIZE);
+				file[i]->setData(data);
+				file[i]->setlastUpdateTime();
 				ck = 1;
 				break;
 			}
 		}
 		if (ck == 0)
 			cout << "The file not exsist" << endl;
+
 		break;
 	}
+	
+	
 	case (4): {
 		if (isEmpty(size) == 0) {
 			for (int i = 0; i < size; i++) {
-				delete (file + i);
+				delete file[i];
 			}
 			delete[] file;
 		}
@@ -82,9 +97,10 @@ void main() {
 
 		break;
 	}
-	default:
+	default: {
 		cout << "illegal chose" << endl;
-			break;
+		break;
+	}
 	}
 	} while (exit);
 
