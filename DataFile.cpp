@@ -103,17 +103,7 @@ DataFile::DataFile(const DataFile& df)
 	strcpy(this->FileName, df.FileName);
 	this->lastUpdateTime = df.lastUpdateTime;
 }
-/*
-DataFile::DataFile(DataFile* df)
-{
-	this->Data = new char[strlen(df->Data)+1];
-	this->FileName = new char[strlen(df->FileName)+1];
-	this->lastUpdateTime = new tm;
-	strcpy(this->Data, df->Data);
-	strcpy(this->FileName, df->FileName);
-	this->lastUpdateTime = df->lastUpdateTime;
-}
-*/
+
 
 const DataFile& DataFile::operator=(const DataFile& other)
 {

@@ -15,14 +15,14 @@ void main() {
 		cout << "2. Add File" << endl;
 		cout << "3. Edit File" << endl;
 		cout << "4. Exit" << endl;
-	cin >> Choose;
+		cin >> Choose;
 	switch (Choose)
 	{
 	case (1): {
 		if (!isEmpty(size))
 			for (int i = 0; i < size; i++) {
 				file[i]->dir();
-				cout << "------------------------------------" << endl;
+				cout << "------------------------------------------------------------------------------------------------------------------------" << endl;
 			}
 
 		break;
@@ -32,7 +32,7 @@ void main() {
 		DataFile** df = new DataFile*[size];
 		for (int i = 0; i < size - 1; i++) {
 			df[i] = new DataFile(*file[i]);
-			//delete file[i];
+			delete file[i];
 		}
 		delete[] file;
 		file = new DataFile*[size];
@@ -68,7 +68,6 @@ void main() {
 		cin.getline(name, SIZE);
 		for (int i = 0; i < size; i++) {
 			if (!strcmp(file[i]->getFileName(), name)) {
-				//file[i]->setFileName(name);
 				cout << "Enter the data of the file" << endl;
 				cin.clear();
 				cin.getline(data, SIZE);
@@ -96,10 +95,10 @@ void main() {
 
 		break;
 	}
-	default: {
+	default: 
 		cout << "illegal chose" << endl;
 		break;
-	}
+	
 	}
 	} while (exit);
 
