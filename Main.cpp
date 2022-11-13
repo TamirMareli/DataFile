@@ -62,14 +62,13 @@ void main() {
 		char* name = new char[SIZE];
 		char* data = new char[SIZE];
 		//need to fix
-		cin.clear();
-		cin.getline(data, SIZE);
 		cout << "Enater name of file" << endl;
 		cin.clear();
+		cin.getline(data, SIZE);
 		cin.getline(name, SIZE);
 		for (int i = 0; i < size; i++) {
-			if (strcmp(file[i]->getFileName(), name)) {
-				file[i]->setFileName(name);
+			if (!strcmp(file[i]->getFileName(), name)) {
+				//file[i]->setFileName(name);
 				cout << "Enter the data of the file" << endl;
 				cin.clear();
 				cin.getline(data, SIZE);

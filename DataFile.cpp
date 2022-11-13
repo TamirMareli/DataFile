@@ -83,7 +83,6 @@ DataFile::~DataFile()
 {
 	delete[] this->Data;
 	delete[] this->FileName;
-	cout << "destrctor" << endl;
 }
 
 DataFile::DataFile(char* fileName, char* data)
